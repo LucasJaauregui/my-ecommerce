@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
+import "./Counter.css";
 
-const Counter = () => {
-  const [number, setNumber] = useState(0);
+const Counter = ({initial,stock,onAdd}) => {
+  const [number, setNumber] = useState(parseInt(initial));
 
-  const sumar = () => {
-    setNumber(number + 1);
-  };
+ 
   const restar = () => {
     setNumber(number - 1);
   };
-
+ const sumar = () => {
+    setNumber(number + 1);
+  };
+  useEffect(()=>{
+    setNumber(parseInt(initial));
+  }, [initial])
   return (
-    <div>
-      <h2> {number}</h2>
-      <button onClick={sumar}>Sumar</button>
-      <button onClick={restar}>restar</button>
-      <hr />
+    <div className="counter">
+      <button disabled={number <= 1} onClick={restar}>-</button>
+      <span> {number}</span>
+      <button disabled={number >=stock} onClick={sumar}>+</button>
+      <div>
+        <button disabled={stock <=0} onClick={() =>onAdd(number)}>Agregar al Carrito</button>
+      </div>
     </div>
   );
 };
